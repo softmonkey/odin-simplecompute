@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>odin-simplecompute</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        <style>
+:root {
+	--gpu-bg: #107c10;
+	--gpu: #3cec3c;
+	--timing: #fcdd89;
+	--timing-bg: #A57C0F;
+}
+
+html {
+	scroll-behavior: smooth;
+	padding: 0 26px;
+}
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+	word-wrap: break-word;
+	/* max-width: 1024px; */
+	line-height: 1.8;
+	font-size: 14px;
+	margin: 0;
+	padding: 0;
+
+	display: flex;
+}
+
+h1 {
+	font-size: 2em;
+	margin-top: 0;
+	padding-top: 20px;
+	padding-bottom: 0.3em;
+	border-bottom: none;
+	/*
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	*/
+	hyphens: auto;
+}
+
+h2 {
+	font-size: 1.75em;
+	padding-bottom: 0.3em;
+	border-bottom: 1px solid rgba(0,0,0,0.4) !important;
+	padding-top: 2rem;
+}
+
+h2:first-of-type {
+	margin-top: 0;
+	padding-top: 0rem;
+}
+
+h3 {
+	font-size: 1.5em;
+	padding-bottom: 0.3em;
+	border-bottom: 1px solid rgba(0,0,0,0.2) !important;
+	padding-top: 1.5rem;
+}
+
+h4 {
+	padding-top: 0.8rem;
+	font-size: 1.15em;
+}
+
+h5 {
+	font-size: 0.875em;
+}
+
+h6 {
+	font-size: 0.85em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 600;
+	margin-bottom: 16px;
+	line-height: 1.25;
+}
+
+main {
+	margin: 0 auto;
+	padding: 20px 0 0 0;
+
+	max-width: 1024px;
+} 
+
+nav {
+	align-self: start;
+
+	max-width: 300px;
+	min-width: 200px;
+	position: sticky;
+	top: 0px;
+	padding: 0 20px 0 0;
+
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-items: stretch;
+}
+
+toc {
+	flex-grow: 4;
+}
+
+toc > ul {
+	margin: 0;
+	padding: 0;
+}
+
+toc > ul:nth-of-type(1) {
+	list-style-type: none;
+}
+
+toc ul {
+	list-style-type: none;
+}
+
+toc > ul li {
+	padding: 0.5rem 0;
+}
+
+toc > ul  ul > li {
+	padding: 0.2rem 0rem;
+	margin: 0 -1.5rem;
+}
+
+main > h1:nth-of-type(1) {
+	top: 0rem;
+}
+
+a {
+	font-weight: 500;
+	text-decoration: none;
+	color: #107c10;
+}
+
+a:hover { 
+	color:rgb(130, 133, 124);
+	text-decoration: underline;
+}
+
+p {
+	margin-bottom: 16px;
+}
+
+table {
+	font-size: 90%;
+	border-collapse: collapse;
+	margin-bottom: 0.7em;
+	text-indent: initial;
+	border-spacing: 2px;
+}
+
+
+th, td {
+	padding: 5px 10px;
+}
+
+th {
+	text-align: left;
+	border-bottom: 1px solid rgba(0,0,0,0.4) !important;
+}
+
+tr {
+	vertical-align: top;
+	border-bottom: 1px solid rgba(0,0,0,0.2) !important;
+}
+
+tr:last-child
+{
+	border-bottom: none !important;
+}
+
+table > caption {
+	text-align: right;
+	caption-side: top;
+	font-size: 90%;
+}
+
+figure {
+	margin: 1em auto;
+	max-width: 85%;
+	transition: transform ease-in-out 0.2s;
+}
+
+figure + figure {
+	margin-top: 3rem; /* Adds margin only between consecutive <p> elements */
+}
+
+figure > img {
+	margin-bottom: 0.8rem;
+}
+
+figcaption {
+	margin: 4px 0;
+	font-size: 90%;
+}
+
+figcaption > p {
+	margin: 0;
+}
+
+figure img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 100%;
+	border-radius: 8px;
+}
+
+aside {
+	font-size: 80%;
+	color: #272727;
+	background: #ededed;
+	padding: 8px;
+	margin: 0 1rem;
+	float: right;
+	max-width: 300px;
+	vertical-align: top;
+	word-wrap: break-word;
+	border-radius: 8px;
+}
+
+aside a {
+	color: #107c10 !important;
+}
+
+aside ul {
+	margin: 0;
+	list-style-position: outside;
+	padding-left: 1.2rem;
+}
+
+aside img {
+	max-height: 150px;
+}
+
+ul {
+	list-style-type: square;
+	text-indent: inherit;
+}
+
+li {
+	padding-left: 0px;
+}
+
+table  ul {
+	margin-left: 1rem;
+	padding: 0;
+}
+
+table li {
+	margin-bottom: 0.7rem;
+}
+
+blockquote {
+	font-size: 90%;
+	padding: 4px 4px 0px 4px;
+	background: #eee;
+
+	margin: 0;
+	border-left-width: 5px;
+	border-left-style: solid;
+	border-radius: 4px;
+}
+
+
+summary {
+	font-size: 90%;
+	font-weight: bold;
+}
+
+code {
+	font-family: var("SF Mono", Monaco, Menlo, Consolas, "Ubuntu Mono", "Liberation Mono", "DejaVu Sans Mono", "Courier New", monospace);
+	display: inline-block;
+	font-size: 100%;
+	padding: 0 10px;
+	background-color: #ededed;
+	border-radius: 4px;
+}
+
+pre code {
+	font-family: var("SF Mono", Monaco, Menlo, Consolas, "Ubuntu Mono", "Liberation Mono", "DejaVu Sans Mono", "Courier New", monospace);
+	display: inline-block;
+	tab-size: 2;
+	border-left: 1px solid rgba(0,0,0,0.3);
+	padding-left: 8px;
+}
+
+::-webkit-meter-optimum-value, ::-webkit-meter-suboptimum-value, ::-webkit-meter-even-less-good-value  {
+	background: #9bf00b;
+}
+
+authors {
+	display: Flex;
+	flex-flow: column wrap;
+	
+	position: fixed;
+	bottom: 20px;
+	
+	max-width: 300px;
+	min-width: 200px;
+}
+
+author {
+	height: 48px;
+	margin-bottom: 12px;
+
+	line-height: 1.3;
+}
+
+author > img {
+	float: left;
+	left: 48px;
+	width: 48px;
+	margin-right: 8px;
+}
+
+.xboxfont {
+	font-family: "Segoe Xbox MDL2 Assets", "Fabric MDL2 Assets";
+	vertical-align: -7%;
+	-webkit-font-smoothing: antialiased;
+}
+
+.pix {
+	display: inline-block;
+	height: 20px;
+	line-height: 20px;
+	vertical-align: middle !important;
+
+	padding: 0px 8px;
+	border-radius: 8px;
+	font-weight: 500;
+	
+	white-space: nowrap;
+	color: #eee 
+}
+
+.pix::before {
+	content: "gID ";
+}
+
+.pix {
+	margin-right: 6px;
+}
+
+.gpu::before {
+	color: var(--gpu);
+}
+
+.gpu {
+	background-color: var(--gpu-bg);
+}
+
+.timing::before {
+	color: var(--timing);
+}
+
+.timing {
+	background-color: var(--timing-bg);
+}
+
+.katex-display {
+	font-size: 1.3em;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		background:rgb(24, 24, 24);
+		color: #ccc;
+	}
+
+	/* 
+	h1 {
+		border-bottom-color: rgba(255,255,255,0.4) !important;
+	}
+	*/
+
+	h2 {
+		border-bottom-color: rgba(255,255,255,0.4) !important;
+	}
+
+	h3 {
+		font-size: 1.25em;
+		border-bottom-color: rgba(255,255,255,0.2) !important;
+	}
+
+	a {
+		color: #9bf00b;
+	}
+
+	th {
+		border-bottom-color: rgba(255,255,255,0.4) !important;
+	}
+	
+	tr {
+		border-bottom-color: rgba(255,255,255,0.2) !important;
+	}
+
+	code {
+		background-color: #272727;
+	}
+
+	author > .person{
+		background: #ededed;
+		color: black;
+		padding: 4px;
+		border-radius: 8px;
+	}
+
+	.markdown-alert-note {
+		background-color:rgb(30, 34, 42);
+	}
+}
+
+@media only screen and (max-width: 1024px) {
+	body {
+		display: unset;
+	}
+
+	table {
+		font-size: 90%;
+	}
+
+	nav {
+
+		max-width: 100%;
+		position: relative;
+		padding: 0 20px 0 0;
+
+		display: inline;
+	}
+
+	main {
+		margin: 10 10;
+		padding: 20px 0 0 0;
+
+		max-width: unset;
+	} 
+
+	aside {
+		float: none;
+		max-width: unset;
+	}
+
+	authors {
+		display: Flex;
+		flex-flow: column wrap;
+		
+		position: relative;
+		bottom: 20px;
+		
+		max-width: unset;
+		min-width: unset;
+	}	
+}	
+</style>
+        </head>
+        <body class="vscode-body vscode-dark">
+            <h1 id="odin-simplecompute">odin-simplecompute</h1>
+<p>A simple example for DirectX 12 compute shaders on buffers (1D) without a swapchain using <a href="https://odin-lang.org/">Odin</a>.</p>
+<p>Use the included <code>build.bat</code> to compile the shader and odin code in one step. If using VSCode, a build task has been created.</p>
+
+            
+            
+        </body>
+        </html>

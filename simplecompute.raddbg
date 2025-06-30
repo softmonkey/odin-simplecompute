@@ -1,0 +1,12 @@
+// raddbg 0.9.18 project file
+
+recent_file: path: "simplecompute.odin"
+recent_file: path: "../odin/base/runtime/core.odin"
+recent_file: path: "../../a/_work/1/s/src/vctools/crt/vcstartup/src/startup/exe_common.inl"
+recent_file: path: "../odin/base/runtime/entry_windows.odin"
+target:
+{
+  executable: "simplecompute.exe"
+  working_directory: ""
+  enabled: 1
+}
